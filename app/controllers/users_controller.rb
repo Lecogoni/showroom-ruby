@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
+  # does that you must be log-in before you do anything with content
+  before_action :authenticate_user!
+
+  # change default layout for this controllers - views/layout/users (it's new file)
+  layout 'users'
+
   # GET /users or /users.json
   def index
     @users = User.all
