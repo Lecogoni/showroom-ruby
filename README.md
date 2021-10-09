@@ -27,3 +27,7 @@ gem Devise
 - Deployment instructions
 
 - ...
+
+
+=> user renvoie tout un layout specific
+=> inserer bootstrap en dur avec popper et js - actuellement en cdn sur layout/user

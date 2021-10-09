@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
-  # does that you must be log-in before you do anything with content
-  before_action :authenticate_user!
-
   # change default layout for this controllers - views/layout/users (it's new file)
   layout 'users'
 
@@ -15,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
   end
-
+ 
   # GET /users/new
   def new
     @user = User.new
@@ -63,9 +60,13 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_user
-      @user = User.find(params[:id])
+        if user_signed_in?
+            @user = User.find(current_user.id)
+        else
+            @user = User.find(params[:id])
+        end 
     end
 
     # Only allow a list of trusted parameters through.
