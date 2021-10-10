@@ -62,11 +62,12 @@ class UsersController < ApplicationController
   private
 
     def set_user
-        if user_signed_in?
-            @user = User.find(current_user.id)
-        else
-            @user = User.find(params[:id])
-        end 
+        @user = User.find(params[:id])
+        #if user_signed_in?
+            #@user = User.find(current_user.id)
+        #else
+            #@user = User.find(params[:id])
+        #end 
     end
 
     # Only allow a list of trusted parameters through.

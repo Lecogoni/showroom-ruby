@@ -1,6 +1,7 @@
 module Users # creation du module pour englober PostController fonctionne avec la modif faite dans les routes
 
     class PostsController < UsersController # change ApplicationController for USerscontroller
+    before_action :set_user, only: %i[ show edit update destroy ]
     before_action :set_post, only: %i[ show edit update destroy ]
 
 
@@ -24,6 +25,7 @@ module Users # creation du module pour englober PostController fonctionne avec l
 
     # GET /posts/1/edit
     def edit
+        @paragraph = @post.elements.build(element_type: 'paragraph')
     end
 
     # POST /posts or /posts.json
@@ -56,9 +58,13 @@ module Users # creation du module pour englober PostController fonctionne avec l
     end
 
     private
+
+        def set_user
+            @user = User.find(current_user.id)
+        end
+
         # Use callbacks to share common setup or constraints between actions.
         def set_post
-            @user = User.find(current_user.id)
             @post = current_user.posts.find(params[:id])
         end
 
