@@ -10,25 +10,44 @@
         </div>
     </div>
     <div class="col-md-9">
+
         <div class="mb-3">
-        
             <%= form_with(model: [@post, @paragraph]) do |form| %>
                 <%= form.hidden_field :element_type, value: 'paragraph' %>
                 <%= form.submit "Paragraph", class: 'btn btn-primary' %>
             <% end %>
-        
         </div>
 
-        <% @post.elements.each do |element| %>
-            <% if element.persisted? %> <!-- Means save in the database -->
-                <%= form_with(model: [@post, element]) do |form| %>
-                    <%= form.text_area :content %>
-                    <%= form.submit "Save", class: 'btn btn-primary' %>
-                <% end %>
-            <% end %>
-        <% end %>
+        <div class="card p-2 pt-4">
+            <div class="card-dody">
+                <% @post.elements.each do |element| %>
+                    <% if element.persisted? %> <!-- Means save in the database -->
+                        <div class="mb-4 p-3 paragraph">
 
-        
+                            <div class="paragraph-content">
+                                <% if element.content.present? %>
+                                    <%= element.content %>
+                                <% else %>
+                                    click to add content
+                                <% end %>
+                            </div>
+
+                            <div class="paragraph-form d-none">
+                                <%= form_with(model: [@post, element]) do |form| %>
+                                    <%= form.rich_text_area :content %>
+                                    <div class="mt-3">
+                                        <%= form.submit "Save", class: 'btn btn-primary' %>
+                                        <a href="#" class="cancel btn btn-secondary">Cancel</a>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+
     </div>
 </div>
 
