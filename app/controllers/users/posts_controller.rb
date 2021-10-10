@@ -25,7 +25,9 @@ module Users # creation du module pour englober PostController fonctionne avec l
 
     # GET /posts/1/edit
     def edit
-        @paragraph = @post.elements.build(element_type: 'paragraph')
+        @element = @post.elements.build
+        #@paragraph = @post.elements.build(element_type: 'paragraph')
+        #@image = @post.elements.build(element_type: 'image')
     end
 
     # POST /posts or /posts.json
@@ -33,7 +35,7 @@ module Users # creation du module pour englober PostController fonctionne avec l
         @post = current_user.posts.build(post_params)
 
         if @post.save
-            redirect_to @post, notice: 'Post was successfully created'
+            redirect_to edit_post_path(@post), notice: 'Post was successfully created'
         else
             render :new
         end
@@ -42,7 +44,7 @@ module Users # creation du module pour englober PostController fonctionne avec l
     # PATCH/PUT /posts/1 or /posts/1.json
     def update
         if @post.update(post_params)
-            redirect_to @post, notice: 'Post was successfully updated'
+            redirect_to edit_post_path(@post), notice: 'Post was successfully updated'
         else
             render :edit
         end
@@ -70,7 +72,7 @@ module Users # creation du module pour englober PostController fonctionne avec l
 
         # Only allow a list of trusted parameters through.
         def post_params
-            params.require(:post).permit(:title, :description) # inutile de passer :user_id => il l'est avec current_user et method build
+            params.require(:post).permit(:title, :description, :header_image) # inutile de passer :user_id => il l'est avec current_user et method build
         end
     end
 

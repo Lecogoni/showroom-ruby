@@ -43,7 +43,7 @@ module Users
       # DELETE /elements/1 or /elements/1.json
       def destroy
         @element.destroy
-          redirect_to elements_url, notice: "Element was successfully destroyed."
+          redirect_to edit_post_path(@element.post), notice: "Element was successfully destroyed."
       end
     
       private
@@ -63,7 +63,7 @@ module Users
     
         # Only allow a list of trusted parameters through.
         def element_params
-          params.require(:element).permit(:element_type, :content)
+          params.require(:element).permit(:element_type, :content, :image)
         end
     end
 end

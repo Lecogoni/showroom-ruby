@@ -6,4 +6,13 @@
       cursor: pointer;
     }
   }
+  .image {
+    text-align: center;
+    img {
+      max-width: 80%;
+    }
+  }
+  .delete-button {
+    float: right;
+  }
 }
