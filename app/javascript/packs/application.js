@@ -38,3 +38,5 @@ document.addEventListener("tclick", (e) => {
   element.classList.add("d-none");
   element.peviousElementSibling.classList.remove("d-none");
 });
+
+import "controllers"
