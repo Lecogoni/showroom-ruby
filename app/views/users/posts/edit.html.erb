@@ -52,56 +52,59 @@
                     Unpublished
                 <% end %>
             </div>
-            <div class="card-body">
-                <% @post.elements.each do |element| %>
-                    <% if element.persisted? %> <!-- Means save in the database -->
-                        <% if element.paragraph? %> <!-- PARAGRAPH -->
-                            <div class="mb-4 p-3 paragraph">
+            <div class="card-body pt-5">
+                <ul id='elements'>
+                    <% @post.elements.each do |element| %>
+                        <% if element.persisted? %> <!-- Means save in the database -->
+                            <li>
+                                <% if element.paragraph? %> <!-- PARAGRAPH -->
+                                    <div class="mb-4 p-3 paragraph">
 
-                                <div class="paragraph-content">
-                                    <% if element.content.present? %>
-                                        <%= element.content %>
-                                    <% else %>
-                                        click to add content - empty paragraph
-                                    <% end %>
-                                </div>
-
-                                <div class="paragraph-form d-none">
-                                    <%= form_with(model: [@post, element]) do |form| %>
-                                        <%= form.rich_text_area :content %>
-                                        <div class="mt-3 d-flex justify-content-between">
-                                            <div>
-                                                <%= form.submit "Save", class: 'btn btn-primary' %>
-                                                <a href="#" class="cancel btn btn-secondary">Cancel</a>
-                                            </div>
-                                            <%= link_to 'Delete', post_element_path(@post, element), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?'}%>
+                                        <div class="paragraph-content">
+                                            <% if element.content.present? %>
+                                                <%= element.content %>
+                                            <% else %>
+                                                click to add content - empty paragraph
+                                            <% end %>
                                         </div>
-                                    <% end %>
-                                </div>
 
-                            </div>
-
-                        <% elsif element.image? %> <!-- IMAGE -->
-                            <div class="image mb-4 p-3">
-                                <% if element.image.present? %>
-                                    <%= link_to post_element_path(@post, element), method: :delete, class: 'delete-btn btn btn-dark mt-2 float-end', data: { confirm: 'Are you sure?'} do %>
-                                        <i class="fas fa-times"></i>
-                                    <% end %>
-                                    <%= image_tag(element.image)%>
-                                <% else %>
-                                    <%= form_with(model: [@post, element]) do |form| %>
-                                        <%= form.file_field :image %>
-                                        <div class="mt-3">
-                                            <%= form.submit "Save", class: 'btn btn-primary' %>
-                                            <a href="#" class="cancel btn btn-secondary">Cancel</a>
+                                        <div class="paragraph-form d-none">
+                                            <%= form_with(model: [@post, element]) do |form| %>
+                                                <%= form.rich_text_area :content %>
+                                                <div class="mt-3 d-flex justify-content-between">
+                                                    <div>
+                                                        <%= form.submit "Save", class: 'btn btn-primary' %>
+                                                        <a href="#" class="cancel btn btn-secondary">Cancel</a>
+                                                    </div>
+                                                    <%= link_to 'Delete', post_element_path(@post, element), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?'}%>
+                                                </div>
+                                            <% end %>
                                         </div>
-                                    <% end %>
+
+                                    </div>
+
+                                <% elsif element.image? %> <!-- IMAGE -->
+                                    <div class="image mb-4 p-3">
+                                        <% if element.image.present? %>
+                                            <%= link_to post_element_path(@post, element), method: :delete, class: 'delete-btn btn btn-dark mt-2 float-end', data: { confirm: 'Are you sure?'} do %>
+                                                <i class="fas fa-times"></i>
+                                            <% end %>
+                                            <%= image_tag(element.image)%>
+                                        <% else %>
+                                            <%= form_with(model: [@post, element]) do |form| %>
+                                                <%= form.file_field :image %>
+                                                <div class="mt-3">
+                                                    <%= form.submit "Save", class: 'btn btn-primary' %>
+                                                    <a href="#" class="cancel btn btn-secondary">Cancel</a>
+                                                </div>
+                                            <% end %>
+                                        <% end %>
+                                    </div>
                                 <% end %>
-                            </div>
+                            </li>
                         <% end %>
-
                     <% end %>
-                <% end %>
+                </ul>
             </div>
         </div>
 

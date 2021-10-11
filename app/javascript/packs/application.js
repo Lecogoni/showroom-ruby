@@ -15,6 +15,8 @@ Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
+import Sortable from "sortablejs";
+
 import "../stylesheets/application";
 
 require("trix");
@@ -28,15 +30,18 @@ document.addEventListener("turbolinks:load", () => {
     element.classList.add("d-none");
     element.nextElementSibling.classList.remove("d-none");
   });
+
+  document.addEventListener("tclick", (e) => {
+    if (!e.target.matches(".cancel")) return;
+
+    let element = e.target.closest(".paragraph-form");
+
+    element.classList.add("d-none");
+    element.peviousElementSibling.classList.remove("d-none");
+  });
+
+  let elements = document.getElementById("elements");
+  new Sortale(elements, { animation: 150 });
 });
 
-document.addEventListener("tclick", (e) => {
-  if (!e.target.matches(".cancel")) return;
-
-  let element = e.target.closest(".paragraph-form");
-
-  element.classList.add("d-none");
-  element.peviousElementSibling.classList.remove("d-none");
-});
-
-import "controllers"
+import "controllers";
