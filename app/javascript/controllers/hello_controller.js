@@ -16,3 +16,5 @@ export default class extends Controller {
     this.outputTarget.textContent = 'Hello, Stimulus!'
   }
 }
+
+

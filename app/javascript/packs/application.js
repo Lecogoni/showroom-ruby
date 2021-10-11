@@ -31,7 +31,7 @@ document.addEventListener("turbolinks:load", () => {
     element.nextElementSibling.classList.remove("d-none");
   });
 
-  document.addEventListener("tclick", (e) => {
+  document.addEventListener("click", (e) => {
     if (!e.target.matches(".cancel")) return;
 
     let element = e.target.closest(".paragraph-form");
@@ -41,7 +41,7 @@ document.addEventListener("turbolinks:load", () => {
   });
 
   let elements = document.getElementById("elements");
-  new Sortale(elements, { animation: 150 });
+  new Sortable(elements, { animation: 150 });
 });
 
 import "controllers";

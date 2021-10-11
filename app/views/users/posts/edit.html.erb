@@ -1,26 +1,28 @@
-
 <div class="row">
 <!-- LEFT COLUMN -->
     <div class="col-md-3">
         <%= link_to 'Back', posts_path, class: 'btn btn-dark mb-3' %>
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title mb-0">Editing post</h6>
+                <h6 class="card-title mb-1">Editing post</h6>
             </div>
            <div class="card-body">
                <%= render 'form', post: @post %> <!-- Editing post partial -->
            </div>
            <div class="card-footer">
                 <% if @post.published? %>
-                    <a href="#" class="btn btn-secondary col-12"
+                    <a href="#" class="btn btn-secondary col-12 mb-2"
                     data-reflex='click->PublisherReflex#unpublish'
-                    data-post-id='<%= @post.id %>'>Unpublished</a>
+                    data-post-id='<%= @post.id %>'><i class="fas fa-file-download"></i> Unpublished</a>
                 <% else %>
-                    <a href="#" class="btn btn-dark col-12"
+                    <a href="#" class="btn btn-dark col-12 mb-2"
                     data-reflex='click->PublisherReflex#publish'
-                    data-post-id='<%= @post.id %>'>Published</a> 
+                    data-post-id='<%= @post.id %>'><i class="fas fa-file-upload"></i> Published</a> 
                     <!-- 1 we call data-reflex - tell him what we want, whitch method AND what result #publish -->
                     <!-- data-post-id => use to provide extra info -->
+                <% end %>
+                <%= button_to post_path(@post), class: "btn btn-danger col-12", method: :delete do %>
+                    <i class="fas fa-trash"></i><span class=""> Delete Post</span>
                 <% end %>
            </div>
         </div>
@@ -46,17 +48,17 @@
         <div class="card mb-5">
             <div class="card-header text-end">
                 <% if @post.published? %>
-                    <span class="badge bg-primary mr-1">Published</span>
-                    <b>Published</b> <%= time_ago_in_words(@post.published_at) %> ago
+                    <span class="badge bg-primary mr-1">Published</span> <small><%= time_ago_in_words(@post.published_at) %> ago</small>
                 <% else %>
-                    Unpublished
+                    <span class="badge bg-secondary">Unpublished</span>
                 <% end %>
             </div>
-            <div class="card-body pt-5">
-                <ul id='elements'>
-                    <% @post.elements.each do |element| %>
+
+            <div class="card-body pt-5" data-controller="elements">
+                <ul id='elements' data-action="drop->elements#sort">
+                    <% @post.elements.order(position: :asc).each do |element| %>
                         <% if element.persisted? %> <!-- Means save in the database -->
-                            <li>
+                            <li data-id="<%= element.id %>" class='element-item'>
                                 <% if element.paragraph? %> <!-- PARAGRAPH -->
                                     <div class="mb-4 p-3 paragraph">
 
@@ -64,7 +66,7 @@
                                             <% if element.content.present? %>
                                                 <%= element.content %>
                                             <% else %>
-                                                click to add content - empty paragraph
+                                                <i class="far fa-edit"></i> Empty paragraph, click to add content
                                             <% end %>
                                         </div>
 
