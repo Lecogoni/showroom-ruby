@@ -1,36 +1,58 @@
 
 <div class="row">
+<!-- LEFT COLUMN -->
     <div class="col-md-3">
-        <%= link_to 'Back', posts_path, class: 'btn btn-secondary mb-3' %>
+        <%= link_to 'Back', posts_path, class: 'btn btn-dark mb-3' %>
         <div class="card">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Editing post</h6>
+            </div>
            <div class="card-body">
-               <h4 class="card-title">Editing Post</h4>
                <%= render 'form', post: @post %> <!-- Editing post partial -->
            </div>
            <div class="card-footer">
                 <% if @post.published? %>
-                    <a href="#" class="btn btn-secondary col-12">Unpublished</a>
+                    <a href="#" class="btn btn-secondary col-12"
+                    data-reflex='click->PublisherReflex#unpublish'
+                    data-post-id='<%= @post.id %>'>Unpublished</a>
                 <% else %>
-                    <a href="#" class="btn btn-dark col-12">Published</a>
+                    <a href="#" class="btn btn-dark col-12"
+                    data-reflex='click->PublisherReflex#publish'
+                    data-post-id='<%= @post.id %>'>Published</a> 
+                    <!-- 1 we call data-reflex - tell him what we want, whitch method AND what result #publish -->
+                    <!-- data-post-id => use to provide extra info -->
                 <% end %>
            </div>
         </div>
     </div>
+<!-- RIGHT COLUMN -->
     <div class="col-md-9">
 
         <div class="mb-3 d-flex">
             <%= form_with(model: [@post, @element]) do |form| %>
                 <%= form.hidden_field :element_type, value: 'paragraph' %>
-                <%= form.submit "Paragraph", class: 'btn btn-dark' %>
+                <%= button_tag(type: 'submit', class: 'element-btn btn btn-secondary mr-1') do %>
+                    <i class="fas fa-paragraph"></i>
+                <% end %>
             <% end %>
             <%= form_with(model: [@post, @element]) do |form| %>
                 <%= form.hidden_field :element_type, value: 'image' %>
-                <%= form.submit "image", class: 'btn btn-dark' %>
+                <%= button_tag(type: 'submit', class: 'btn btn-secondary') do %>
+                    <i class="far fa-image"></i>
+                <% end %>
             <% end %>
         </div>
 
-        <div class="card p-2 pt-4">
-            <div class="card-dody">
+        <div class="card mb-5">
+            <div class="card-header text-end">
+                <% if @post.published? %>
+                    <span class="badge bg-primary mr-1">Published</span>
+                    <b>Published</b> <%= time_ago_in_words(@post.published_at) %> ago
+                <% else %>
+                    Unpublished
+                <% end %>
+            </div>
+            <div class="card-body">
                 <% @post.elements.each do |element| %>
                     <% if element.persisted? %> <!-- Means save in the database -->
                         <% if element.paragraph? %> <!-- PARAGRAPH -->
@@ -62,12 +84,10 @@
                         <% elsif element.image? %> <!-- IMAGE -->
                             <div class="image mb-4 p-3">
                                 <% if element.image.present? %>
-                                    <div>
-                                        <%= image_tag(element.image)%>
-                                    </div>
-                                    <div class="delete-button  mt-2">
-                                        <%= link_to 'Delete', post_element_path(@post, element), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?'}%>
-                                    </div>
+                                    <%= link_to post_element_path(@post, element), method: :delete, class: 'delete-btn btn btn-dark mt-2 float-end', data: { confirm: 'Are you sure?'} do %>
+                                        <i class="fas fa-times"></i>
+                                    <% end %>
+                                    <%= image_tag(element.image)%>
                                 <% else %>
                                     <%= form_with(model: [@post, element]) do |form| %>
                                         <%= form.file_field :image %>

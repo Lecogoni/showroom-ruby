@@ -12,8 +12,19 @@
       max-width: 80%;
     }
   }
-  .delete-button {
-    float: right;
+  .element-btn {
+    margin-right: 5px;
+  }
+  .delete-btn {
+    position: absolute;
+    right: calc(
+      10% + 38px
+    ); /* Prend 10% a droite car l'image est width 80% + le padding */
+    opacity: 0.7;
+    border-radius: 50px;
+    &:hover {
+      opacity: 1;
+    }
   }
   .post-card {
     .header-img {
