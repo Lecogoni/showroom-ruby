@@ -27,13 +27,14 @@
     <%= form.file_field :header_image, class: 'form-control' %>
     <div class="mt-1">
         <% if post.header_image.present? %>
+            <small>current Image :</small>
             <%= image_tag(post.header_image, width: '100%')%>
         <% end %>
     </div>
   </div>
 
   <div class="actions mt-1">
-    <%= form.submit class: 'btn btn-primary btn-block' %>
+    <%= form.submit class: 'btn btn-primary col-12' %>
   </div>
   
 <% end %>

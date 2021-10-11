@@ -7,6 +7,13 @@
                <h4 class="card-title">Editing Post</h4>
                <%= render 'form', post: @post %> <!-- Editing post partial -->
            </div>
+           <div class="card-footer">
+                <% if @post.published? %>
+                    <a href="#" class="btn btn-secondary col-12">Unpublished</a>
+                <% else %>
+                    <a href="#" class="btn btn-dark col-12">Published</a>
+                <% end %>
+           </div>
         </div>
     </div>
     <div class="col-md-9">
