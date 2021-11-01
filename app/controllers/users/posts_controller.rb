@@ -35,7 +35,8 @@ module Users # creation du module pour englober PostController fonctionne avec l
         @post = current_user.posts.build(post_params)
 
         if @post.save
-            redirect_to edit_post_path(@post), notice: 'Post was successfully created'
+            redirect_to edit_post_path(@post)
+            flash[:alert] = "Post was successfully created"
         else
             render :new
         end
@@ -44,7 +45,8 @@ module Users # creation du module pour englober PostController fonctionne avec l
     # PATCH/PUT /posts/1 or /posts/1.json
     def update
         if @post.update(post_params)
-            redirect_to edit_post_path(@post), notice: 'Post was successfully updated'
+            redirect_to edit_post_path(@post)
+            flash[:success] = "Post was successfully updated" 
         else
             render :edit
         end
@@ -53,7 +55,8 @@ module Users # creation du module pour englober PostController fonctionne avec l
     # DELETE /posts/1 or /posts/1.json
     def destroy
         @post.destroy
-        redirect_to posts_url, notice: "Post was successfully destroyed."
+        redirect_to posts_url
+        flash[:notice] = "Post was successfully destroyed." 
     end
 
     private

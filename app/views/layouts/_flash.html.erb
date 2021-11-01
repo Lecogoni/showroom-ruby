@@ -1,0 +1,16 @@
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <div id="flash-<%= type %>" class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissible fade show" role="alert">
+      <div class="container flash-alert d-flex justify-content-between">
+        <div>
+          <%= msg %>
+        </div>
+        <div>
+          <button type="button" class="no-btn" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+        </div>
+      </div>
+    </div>
+    <script>setTimeout(e => document.getElementById("flash-<%= type %>").remove(), 5000);</script> 
+  <% end %>
+<% end %>
